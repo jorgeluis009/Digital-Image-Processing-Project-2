@@ -43,10 +43,20 @@ function eternalLoop(handles)
                 imshow(Hem(img,50));
             case 5 % Spectre
                 imshow(ApplySpectre(img),[]);
-            case 6  
-                disp('positive one')
+            case 6 % Gauss
+                val = handles.GaussSlider.Value;
+                imshow(imnoise(img,'gaussian',val));
+                handles.text5.String = val;
+            case 7 % Periodic Noise
+
+            case 8 % Rotation
+
+            case 9 % Grid
+
+            case 10 % Color Reduction
+
             otherwise
-                disp('other value')
+                break;
         end
         
     end
@@ -126,6 +136,28 @@ function ExitBTN_Callback(hObject, eventdata, handles)
 function sliderGamma_Callback(hObject, eventdata, handles)
 
 function sliderGamma_CreateFcn(hObject, eventdata, handles)
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on slider movement.
+function GaussSlider_Callback(hObject, eventdata, handles)
+% hObject    handle to GaussSlider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function GaussSlider_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to GaussSlider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
