@@ -28,7 +28,7 @@ function eternalLoop(handles)
     while(true)
         img = snapshot(camera);
         aux = getGlobalx();
-        disp(aux);
+        % disp(aux);
                 
         switch aux
             case 1 % Original
@@ -48,9 +48,9 @@ function eternalLoop(handles)
                 imshow(imnoise(img,'gaussian',val));
                 handles.text5.String = val;
             case 7 % Periodic Noise
-
+                
             case 8 % Rotation
-
+                imshow(imrotate(img,90));
             case 9 % Grid
 
             case 10 % Color Reduction
@@ -76,27 +76,12 @@ function r = getGlobalx
     r = x;
 
 function varargout = guiProject_OutputFcn(hObject, eventdata, handles) 
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Get default command line output from handles structure
-
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% Get default command line output from handles structure
 handles.output = hObject;
 varargout{1} = handles.output;
 
-
-% --- Executes on button press in originalBTN.
 function originalBTN_Callback(hObject, eventdata, handles)
     setGlobalx(1);
     disp(getGlobalx);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function negativeBTN_Callback(hObject, eventdata, handles)
     setGlobalx(2);
@@ -125,9 +110,7 @@ function rejillaBTN_Callback(hObject, eventdata, handles)
 function colorBTN_Callback(hObject, eventdata, handles)
     setGlobalx(10);
 
-
 function figure1_CloseRequestFcn(hObject, eventdata, handles)
-% Hint: delete(hObject) closes the figure+
 delete(hObject);
 
 function ExitBTN_Callback(hObject, eventdata, handles)
@@ -140,24 +123,10 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
-% --- Executes on slider movement.
 function GaussSlider_Callback(hObject, eventdata, handles)
-% hObject    handle to GaussSlider (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
-
-% --- Executes during object creation, after setting all properties.
 function GaussSlider_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to GaussSlider (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
