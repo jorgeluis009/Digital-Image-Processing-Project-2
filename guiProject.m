@@ -1,4 +1,5 @@
 function varargout = guiProject(varargin)
+% clc
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -38,7 +39,7 @@ function eternalLoop(handles)
             case 3 % Gamma
                 val = handles.sliderGamma.Value;
                 handles.text6.String = val;
-                imshow(imadjust(img,[],[],val));
+                imshow(imadjust(img,[],[],val)); 
             case 4 % Hemianopsia
                 imshow(Hem(img,50));
             case 5 % Spectre
@@ -48,18 +49,36 @@ function eternalLoop(handles)
                 imshow(imnoise(img,'gaussian',val));
                 handles.text5.String = val;
             case 7 % Periodic Noise
-                
+                 % 40 40 imnoise3
+                 [M,N] = size(img);
+                 C = [40 40];
+                 [n,R,S] = imnoise3(M,N,C);
+                 n = autoadj(n);
+                 g = img + n;
+                 imshow(g,[]);
             case 8 % Rotation
                 imshow(imrotate(img,90));
             case 9 % Grid
 
             case 10 % Color Reduction
-
+                x = handles.NumColors.String;
+                ApplyColorReduction(img,x);
             otherwise
                 break;
         end
         
     end
+
+function ApplyColorReduction(img,x)
+    x = str2num(x);
+    if isempty(x)
+        x = 255;
+    end
+    if x > 256
+        x = 255;
+    end
+     [ans,map] = rgb2ind(img,x,'nodither');
+     imshow(ans,map)
 
 function ans = ApplySpectre(img)
     img = rgb2gray(img);
@@ -129,4 +148,27 @@ function GaussSlider_CreateFcn(hObject, eventdata, handles)
 
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+
+function NumColors_Callback(hObject, eventdata, handles)
+% hObject    handle to NumColors (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of NumColors as text
+%        str2double(get(hObject,'String')) returns contents of NumColors as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function NumColors_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to NumColors (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
