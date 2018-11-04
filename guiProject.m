@@ -51,15 +51,20 @@ function eternalLoop(handles)
             case 7 % Periodic Noise
                  % 40 40 imnoise3
                  [M,N] = size(img);
-                 C = [40 40];
+                 C = [5 5];
                  [n,R,S] = imnoise3(M,N,C);
-                 n = autoadj(n);
-                 g = img + n;
-                 imshow(g,[]);
+%                  n = autoadj(n);
+%                  g = img + n;
+                 imshow(n,[]);
             case 8 % Rotation
                 imshow(imrotate(img,90));
             case 9 % Grid
-
+                [M,N,P] = size(img);
+                n = 1:2:M;
+                m = 1:2:N;
+                gridRes = img(n,m,:);
+                res = [gridRes,gridRes;gridRes,gridRes];
+                imshow(res);
             case 10 % Color Reduction
                 x = handles.NumColors.String;
                 ApplyColorReduction(img,x);

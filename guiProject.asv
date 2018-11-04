@@ -51,15 +51,19 @@ function eternalLoop(handles)
             case 7 % Periodic Noise
                  % 40 40 imnoise3
                  [M,N] = size(img);
-                 C = [40 40];
+                 C = [5 5];
                  [n,R,S] = imnoise3(M,N,C);
-                 n = autoadj(n);
-                 g = img + n;
-                 imshow(g,[]);
+%                  n = autoadj(n);
+%                  g = img + n;
+                 imshow(n,[]);
             case 8 % Rotation
                 imshow(imrotate(img,90));
             case 9 % Grid
-
+                [M,N,P] = size(img);
+                n_cols = 1:2:M;
+                n_rows = 1:2:N;
+                img = img(n_cols,n_rows,:);
+                res = [img,imgimg
             case 10 % Color Reduction
                 x = handles.NumColors.String;
                 ApplyColorReduction(img,x);
@@ -70,16 +74,15 @@ function eternalLoop(handles)
     end
 
 function ApplyColorReduction(img,x)
-    x = str2num('e');
-    y = isnumeric(x);
+    x = str2num(x);
     if isempty(x)
         x = 255;
     end
-    if (x > 256)
+    if x > 256
         x = 255;
     end
-%     [ans,map] = rgb2ind(img,x,'nodither');
-%     imshow(ans,map)
+     [ans,map] = rgb2ind(img,x,'nodither');
+     imshow(ans,map)
 
 function ans = ApplySpectre(img)
     img = rgb2gray(img);
