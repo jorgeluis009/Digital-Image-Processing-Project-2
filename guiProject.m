@@ -49,13 +49,7 @@ function eternalLoop(handles)
                 imshow(imnoise(img,'gaussian',val));
                 handles.text5.String = val;
             case 7 % Periodic Noise
-                 % 40 40 imnoise3
-                 [M,N] = size(img);
-                 C = [5 5];
-                 [n,R,S] = imnoise3(M,N,C);
-%                  n = autoadj(n);
-%                  g = img + n;
-                 imshow(n,[]);
+                 imshow(res(img));
             case 8 % Rotation
                 imshow(imrotate(img,90));
             case 9 % Grid
@@ -73,7 +67,29 @@ function eternalLoop(handles)
         end
         
     end
-
+    
+function res = per(img)
+    C=[15 15;40 0];
+    [M N l]=size(img);
+    [n,R,S]=imnoise3(M,N,C);
+    img=im2double(img);
+    
+    n=autoadj(n);
+    R=img(:,:,1);
+    G=img(:,:,2);
+    B=img(:,:,3);
+    R=R+n;
+    R=autoadj(R);
+    
+    G=G+n;
+    G=autoadj(G);
+    
+    B=B+n;
+    B=autoadj(B);
+    
+    res=cat(3,R,G,B);
+    res=im2uint8(res);
+        
 function ApplyColorReduction(img,x)
     x = str2num(x);
     if isempty(x)
